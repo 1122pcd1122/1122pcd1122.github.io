@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>pcd&#39;s Blog</title>
   
-  <subtitle>Hello,world.</subtitle>
+  <subtitle>keep the original faith</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
@@ -10,7 +10,7 @@
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>裴晨栋</name>
+    <name>pcd</name>
     
   </author>
   
