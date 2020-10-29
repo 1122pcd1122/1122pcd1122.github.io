@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-29T11:39:11.902Z</updated>
+  <updated>2020-10-29T11:43:52.450Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2020/10/29/%E6%B5%85%E8%B0%88Android%20onSaceInstanceState()%E5%92%8ConRestoreInstanceState()%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA/"/>
     <id>http://yoursite.com/2020/10/29/%E6%B5%85%E8%B0%88Android%20onSaceInstanceState()%E5%92%8ConRestoreInstanceState()%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA/</id>
     <published>2020-10-29T11:39:11.902Z</published>
-    <updated>2020-10-29T11:39:11.902Z</updated>
+    <updated>2020-10-29T11:43:52.450Z</updated>
     
     <content type="html"><![CDATA[<h1 id="浅谈Android-onSaceInstanceState-和onRestoreInstanceState-调用时机"><a href="#浅谈Android-onSaceInstanceState-和onRestoreInstanceState-调用时机" class="headerlink" title="浅谈Android onSaceInstanceState()和onRestoreInstanceState()调用时机"></a>浅谈Android onSaceInstanceState()和onRestoreInstanceState()调用时机</h1><blockquote><p>Android系统的回收机制会在<strong>未经用户主动操作的情况下销毁Activity</strong>,而为了避免系统回收activity导致数据丢失,Android为我们提供了onSaveInStaceState(Bundle outState)和onRestoreInstanceState(Bundle savedinstanceState)用户保存和恢复数据</p></blockquote><h2 id="onSaveInStaceState-Bundle-outState-在什么时机被调用"><a href="#onSaveInStaceState-Bundle-outState-在什么时机被调用" class="headerlink" title="onSaveInStaceState(Bundle outState)在什么时机被调用"></a>onSaveInStaceState(Bundle outState)在什么时机被调用</h2><p>当它离开栈顶时会被调用,此时activity没有被销毁可能会被销毁.</p><ol><li>当屏幕息掉,再打开时</li><li>用户按下home键时</li><li>屏幕方向切换时</li><li>从当前Activity开启一个新的Activity</li></ol><p>当前activity的声明周期不确定:</p><p><strong>onPause-&gt;onSaveInstanceState-&gt;onStop或者onPause-&gt;onStop-&gt;onSaveInstanceState</strong></p><h2 id="onRestoreInstanceState-在什么时机被调用"><a href="#onRestoreInstanceState-在什么时机被调用" class="headerlink" title="onRestoreInstanceState()在什么时机被调用"></a>onRestoreInstanceState()在什么时机被调用</h2><p>调用时机为确定Activity被系统销毁后再打开avtivity时被调用</p><ol><li>屏幕旋转时</li><li>系统因为资源有限杀死activity时</li></ol><p>当前activity的声明周期:</p><p><strong>onPause -&gt; onSaveInstanceState -&gt; onStop -&gt; onDestroy -&gt; onCreate -&gt; onStart -&gt; onRestoreInstanceState -&gt; onResume</strong></p>]]></content>
     
