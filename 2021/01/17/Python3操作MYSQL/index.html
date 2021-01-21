@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-32?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-16?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="pcd's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Python3操作MYSQLPyMySQL安装 PyMySQL 是在 Python3.x 版本中用于连接 MySQL 服务器的一个库  1pip install PyMySQL  mysql连接1234567connection &#x3D; pymysql.connect(host&#x3D;&#39;localhost&#39;,                              port&#x3D;3306,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3操作MYSQL">
+<meta property="og:url" content="http://yoursite.com/2021/01/17/Python3%E6%93%8D%E4%BD%9CMYSQL/index.html">
+<meta property="og:site_name" content="pcd&#39;s Blog">
+<meta property="og:description" content="Python3操作MYSQLPyMySQL安装 PyMySQL 是在 Python3.x 版本中用于连接 MySQL 服务器的一个库  1pip install PyMySQL  mysql连接1234567connection &#x3D; pymysql.connect(host&#x3D;&#39;localhost&#39;,                              port&#x3D;3306,">
+<meta property="article:published_time" content="2021-01-17T15:08:06.217Z">
+<meta property="article:modified_time" content="2021-01-18T08:49:56.415Z">
+<meta property="article:author" content="大人物">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/17/Python3操作MYSQL/"/>
+
+
+
+
+
+  <title>Python3操作MYSQL | pcd's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pcd's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep the original faith</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/17/Python3%E6%93%8D%E4%BD%9CMYSQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大人物">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/07/20/U4R0G6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pcd's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python3操作MYSQL</h1>
+        
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-17T23:08:06+08:00">
+                2021-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  892 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python3操作MYSQL"><a href="#Python3操作MYSQL" class="headerlink" title="Python3操作MYSQL"></a>Python3操作MYSQL</h1><h2 id="PyMySQL安装"><a href="#PyMySQL安装" class="headerlink" title="PyMySQL安装"></a>PyMySQL安装</h2><blockquote>
+<p>PyMySQL 是在 Python3.x 版本中用于连接 MySQL 服务器的一个库</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install PyMySQL</span><br></pre></td></tr></table></figure>
+
+<h2 id="mysql连接"><a href="#mysql连接" class="headerlink" title="mysql连接"></a>mysql连接</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">connection = pymysql.connect(host=<span class="string">'localhost'</span>, </span><br><span class="line">                             port=<span class="number">3306</span>,</span><br><span class="line">                             user=<span class="string">'root'</span>,</span><br><span class="line">                             password=<span class="string">'peichendong17'</span>,</span><br><span class="line">                             database=<span class="string">'test'</span>,</span><br><span class="line">                             charset=<span class="string">'utf8'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">host</td>
+<td align="center">数据库服务地址,默认localhost</td>
+</tr>
+<tr>
+<td align="center">user</td>
+<td align="center">用户名,默认为当前程序运行用户</td>
+</tr>
+<tr>
+<td align="center">password</td>
+<td align="center">登录密码,默认为空字符串</td>
+</tr>
+<tr>
+<td align="center">port</td>
+<td align="center">数据库端口,默认为3306</td>
+</tr>
+<tr>
+<td align="center">database</td>
+<td align="center">数据库名</td>
+</tr>
+<tr>
+<td align="center">cursorclass</td>
+<td align="center">设置默认的游标类型</td>
+</tr>
+<tr>
+<td align="center">read_timeout</td>
+<td align="center">读取数据超时时间,单位秒,默认无限制</td>
+</tr>
+<tr>
+<td align="center">write_timeout</td>
+<td align="center">写入数据超时时间,单位秒,默认无限制</td>
+</tr>
+<tr>
+<td align="center">charset</td>
+<td align="center">数据库编码</td>
+</tr>
+<tr>
+<td align="center">init_command</td>
+<td align="center">当连接建立完成之后执行的初始化SQL语句</td>
+</tr>
+<tr>
+<td align="center">connection_timeout</td>
+<td align="center">连接超时时间,默认10,最小1,最大3153600</td>
+</tr>
+<tr>
+<td align="center">autocommit</td>
+<td align="center">是否自动提交,默认不自动提交,参数值为None表示以服务器为准</td>
+</tr>
+<tr>
+<td align="center">max_allowed_packet</td>
+<td align="center">发送给服务器的最大数据量,默认为16MB</td>
+</tr>
+<tr>
+<td align="center">defer_connect</td>
+<td align="center">是否惰性连接,默认为立即连接</td>
+</tr>
+<tr>
+<td align="center">db</td>
+<td align="center">已弃用的数据库别名</td>
+</tr>
+<tr>
+<td align="center">passwd</td>
+<td align="center">已弃用的数据库密码别名</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="执行SQL"><a href="#执行SQL" class="headerlink" title="执行SQL"></a>执行SQL</h2><ul>
+<li><p>cursor.execute(sql,args)执行单条SQL</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取游标</span></span><br><span class="line">cursor = connection.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据表</span></span><br><span class="line">effect_row = cursor.execute(<span class="string">'''</span></span><br><span class="line"><span class="string">CREATE TABLE `users` (</span></span><br><span class="line"><span class="string">  `name` varchar(32) NOT NULL,</span></span><br><span class="line"><span class="string">  `age` int(10) unsigned NOT NULL DEFAULT '0',</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`name`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB DEFAULT CHARSET=utf8</span></span><br><span class="line"><span class="string">'''</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据(元组或列表)</span></span><br><span class="line">effect_row2 = cursor.execute(<span class="string">'INSERT INTO `users` (`name`, `age`) VALUES (%s, %s)'</span>, (<span class="string">'mary'</span>, <span class="number">18</span>))</span><br><span class="line"></span><br><span class="line">info = &#123;<span class="string">'name'</span>: <span class="string">'20'</span>, <span class="string">'age'</span>: <span class="string">'18'</span>&#125;</span><br><span class="line">effect_row3 = cursor.execute(<span class="string">'INSERT INTO users (name, age) VALUES (%(name)s, %(age)s)'</span>, info)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>executemany(sql,args)批量执行SQL</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 批量插入</span></span><br><span class="line">effect_row = cursor.executemany(</span><br><span class="line">    <span class="string">'INSERT INTO `users` (`name`, `age`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE age=VALUES(age)'</span>, [</span><br><span class="line">        (<span class="string">'hello'</span>, <span class="number">13</span>),</span><br><span class="line">        (<span class="string">'fake'</span>, <span class="number">28</span>),</span><br><span class="line">    ])</span><br><span class="line">connection.commit()</span><br></pre></td></tr></table></figure>
+
+<p>注意:INSERT,UPDATE,DELETE等修改数据的语句需手动执行connection.commit()完成对数据修改的提交</p>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  cursor.execute(<span class="string">'SELECT * FROM users'</span>)</span><br><span class="line">  <span class="comment"># # 当前位置是指游标当前所指的位置后移动一位</span></span><br><span class="line">  <span class="comment"># cursor.scroll(1, mode='relative')  # 相对当前位置移动</span></span><br><span class="line">  <span class="comment"># # 绝对位置是游标移动到参数中设置的位置</span></span><br><span class="line">  <span class="comment"># cursor.scroll(2, mode='absolute')  # 相对绝对位置移动</span></span><br><span class="line">  <span class="comment"># 单条数据</span></span><br><span class="line">  print(<span class="string">'返回游标所指的下一行数据:'</span>, cursor.fetchone())</span><br><span class="line">  <span class="comment"># 获取前N条数据</span></span><br><span class="line">  print(<span class="string">'游标所指位置的下两行数据:'</span>, cursor.fetchmany(<span class="number">2</span>))</span><br><span class="line"><span class="comment"># 获取所有数据</span></span><br><span class="line">  print(<span class="string">'游标所指位置的剩余所有数据:'</span>, cursor.fetchall())</span><br><span class="line">  <span class="comment"># 上述三条每执行一次,会使游标向后移动</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="游标控制"><a href="#游标控制" class="headerlink" title="游标控制"></a>游标控制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当前位置是指游标当前所指的位置后移动一位</span></span><br><span class="line">cursor.scroll(<span class="number">1</span>, mode=<span class="string">'relative'</span>)  <span class="comment"># 相对当前位置移动</span></span><br><span class="line"><span class="comment"># 绝对位置是游标移动到参数中设置的位置</span></span><br><span class="line">cursor.scroll(<span class="number">2</span>, mode=<span class="string">'absolute'</span>)  <span class="comment"># 相对绝对位置移动</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="设置游标类型"><a href="#设置游标类型" class="headerlink" title="设置游标类型"></a>设置游标类型</h2><p>查询时,默认返回的数据类型时元组,可以自定义设置返回类型,支持5中游标类型:</p>
+<ul>
+<li><p>Cursor:默认,元组类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回一条数据: (<span class="string">'20'</span>, <span class="number">18</span>)</span><br><span class="line">返回两条数据: ((<span class="string">'fake'</span>, <span class="number">28</span>), (<span class="string">'hello'</span>, <span class="number">13</span>))</span><br><span class="line">返回所有数据 ((<span class="string">'mary'</span>, <span class="number">18</span>),)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>DictCursor:字典类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回游标所指的下一行数据: &#123;<span class="string">'name'</span>: <span class="string">'20'</span>, <span class="string">'age'</span>: <span class="number">18</span>&#125;</span><br><span class="line">游标所指位置的下两行数据: [&#123;<span class="string">'name'</span>: <span class="string">'fake'</span>, <span class="string">'age'</span>: <span class="number">28</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'hello'</span>, <span class="string">'age'</span>: <span class="number">13</span>&#125;]</span><br><span class="line">游标所指位置的剩余所有数据: [&#123;<span class="string">'name'</span>: <span class="string">'mary'</span>, <span class="string">'age'</span>: <span class="number">18</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>DictCursorMixin:支持自定义的游标类型,需自定义才可以使用</p>
+</li>
+<li><p>SSCursor:无缓冲元组类型</p>
+</li>
+<li><p>SSDictCursor:无缓冲字典类型</p>
+</li>
+</ul>
+<p>无缓冲游标类型,适用于数据量很大 ,一次性返回太慢,或者服务端宽较小时.</p>
+<h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><ul>
+<li>开启事务<code>connection.begin()</code></li>
+<li>提交事务<code>connection.commit()</code></li>
+<li>回滚事务<code>connection.rollback()</code></li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://pymysql.readthedocs.io/en/latest/modules/index.html" target="_blank" rel="noopener">PyMySQL的API参考文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/17/%E7%94%A8%E6%88%B7(%E7%94%A8%E6%88%B7%E5%90%8D,%E8%B4%A6%E5%8F%B7,%E5%AF%86%E7%A0%81,%E6%80%A7%E5%88%AB,%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81,%E9%82%AE%E7%AE%B1)/" rel="next" title="用户(用户名,账号,密码,性别,电话号码,邮箱)">
+                <i class="fa fa-chevron-left"></i> 用户(用户名,账号,密码,性别,电话号码,邮箱)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/01/20/%E6%9C%80%E8%BF%91%E5%81%9A%E7%9A%84%E4%BA%94%E9%81%93%E9%93%BE%E8%A1%A8%E7%AE%97%E6%B3%95%E9%A2%98%E6%80%BB%E7%BB%93/" rel="prev" title="最近做的五道链表算法题总结">
+                最近做的五道链表算法题总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s1.ax1x.com/2020/07/20/U4R0G6.jpg"
+                alt="大人物" />
+            
+              <p class="site-author-name" itemprop="name">大人物</p>
+              <p class="site-description motion-element" itemprop="description">我们愈是学习，愈觉得自己的贫乏</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/1122pcd1122" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python3操作MYSQL"><span class="nav-number">1.</span> <span class="nav-text">Python3操作MYSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyMySQL安装"><span class="nav-number">1.1.</span> <span class="nav-text">PyMySQL安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql连接"><span class="nav-number">1.2.</span> <span class="nav-text">mysql连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行SQL"><span class="nav-number">1.3.</span> <span class="nav-text">执行SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询数据"><span class="nav-number">1.4.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标控制"><span class="nav-number">1.5.</span> <span class="nav-text">游标控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置游标类型"><span class="nav-number">1.6.</span> <span class="nav-text">设置游标类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务处理"><span class="nav-number">1.7.</span> <span class="nav-text">事务处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">1.8.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大人物</span>
+
+  
+</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
